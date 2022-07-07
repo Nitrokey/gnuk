@@ -12,8 +12,8 @@ LDSCRIPT= regnual.ld
 MCU  = cortex-m3
 
 TRGT = arm-none-eabi-
-CC   = $(TRGT)gcc
-LD   = $(TRGT)ld
+CC   = $(TRGT)gcc --specs=picolibc.specs
+LD   = $(TRGT)ld --specs=picolibc.specs
 OBJCOPY   = $(TRGT)objcopy
 OBJDUMP   = $(TRGT)objdump
 

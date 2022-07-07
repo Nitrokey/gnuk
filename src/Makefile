@@ -44,8 +44,8 @@ OBJS_ADD += build/stdaln-sys-bin.o
 endif
 
 ###################################
-CC   = $(CROSS)gcc
-LD   = $(CROSS)gcc
+CC   = $(CROSS)gcc $(SPECS)
+LD   = $(CROSS)gcc $(SPECS)
 OBJCOPY   = $(CROSS)objcopy
 
 CWARN = -Wall -Wextra -Wstrict-prototypes
