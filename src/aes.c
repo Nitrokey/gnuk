@@ -65,19 +65,19 @@ put_uint32_le (unsigned char *b, unsigned int i, uint32_t n)
 
 
 /* Forward table */
+/* Note that We expose FT0, FT1, and FT2 tables.  */
 #include "aes-t-table.c.in"
 
 #define V(a,b,c,d) 0x##a##b##c##d
-/* Note that We expose FT0 table.  */
-const uint32_t FT0[256] = { FT };
+const uint32_t FT0[256] __attribute__((weak,section(".sys.0"))) = { FT };
 #undef V
 
 #define V(a,b,c,d) 0x##b##c##d##a
-static const uint32_t FT1[256] = { FT };
+const uint32_t FT1[256] __attribute__((weak,section(".sys.1"))) = { FT };
 #undef V
 
 #define V(a,b,c,d) 0x##c##d##a##b
-static const uint32_t FT2[256] = { FT };
+const uint32_t FT2[256] __attribute__((weak,section(".sys.2"))) = { FT };
 #undef V
 
 #define V(a,b,c,d) 0x##d##a##b##c
