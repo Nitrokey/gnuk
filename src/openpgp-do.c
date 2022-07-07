@@ -1098,13 +1098,6 @@ proc_resetting_code (const uint8_t *data, int len)
     }
   else
     {
-      const uint8_t *ks_pw1 = gpg_do_read_simple (NR_DO_KEYSTRING_PW1);
-      const uint8_t *ks_pw3 = gpg_do_read_simple (NR_DO_KEYSTRING_PW3);
-
-      /* Reject having resetting code after admin-less mode setup.  */
-      if (ks_pw1 && ks_pw3 == NULL)
-	return 0;
-
       if (gpg_do_kdf_check (len, 1) == 0)
 	return 0;
 
@@ -1508,15 +1501,11 @@ proc_key_import (const uint8_t *data, int len)
   int attr;
   const uint8_t *p = data;
   uint8_t pubkey[512];
-  const uint8_t *ks_pw1 = gpg_do_read_simple (NR_DO_KEYSTRING_PW1);
-  const uint8_t *ks_pw3 = gpg_do_read_simple (NR_DO_KEYSTRING_PW3);
-
-  /* Reject importing key after admin-less mode setup.  */
-  if (ks_pw1 && ks_pw3 == NULL)
-    return 0;
 
 #ifdef KDF_DO_REQUIRED
-  if (do_ptr[NR_DO_KDF] == NULL)
+  const uint8_t *kdf_do = do_ptr[NR_DO_KDF];
+
+  if (kdf_do == NULL)
     return 0;		/* Error.  */
 #endif
 
