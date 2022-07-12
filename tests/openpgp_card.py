@@ -79,6 +79,11 @@ class OpenPGP_Card(object):
         except:
             string4 = None
         self.is_gnuk2 = (self.is_gnuk and string4 and string4[0:9] == "release/2")
+        try:
+            string5 = reader.get_string(5)
+        except:
+            string5 = None
+        self.kdf_required = (self.is_gnuk and string5 and string5[-12:] == "kdf=required")
         self.initialize_kdf()
 
     def add_to_key_attrlist(self, no, attr):
