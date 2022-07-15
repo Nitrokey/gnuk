@@ -207,7 +207,6 @@ if test "$target" = "GNU_LINUX"; then
   arch="gnu-linux"
   emulation="yes"
   cross=""
-  specs=""
   mcu="none"
   def_emulation="-DGNU_LINUX_EMULATION"
   def_memory_size="-DMEMORY_SIZE=1024"
@@ -219,7 +218,6 @@ else
   arch="cortex-m"
   emulation=""
   cross="arm-none-eabi-"
-  specs="--specs=picolibc.specs"
   mcu="cortex-m3"
   def_emulation=""
   def_memory_size="-DMEMORY_SIZE=$MEMORY_SIZE"
@@ -452,7 +450,6 @@ fi
  echo "ARCH=$arch";
  echo "EMULATION=$emulation";
  echo "CROSS=$cross";
- echo "SPECS=$specs";
  echo "MCU=$mcu";
  echo "DEFS=$use_sys3 $flash_override $def_emulation $def_memory_size $def_mhz";
  echo "LDSCRIPT=$ldscript";
