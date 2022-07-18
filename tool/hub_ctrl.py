@@ -1,9 +1,9 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 """
 hub_ctrl.py - a tool to control port power/led of USB hub
 
-Copyright (C) 2006, 2011, 2016 Free Software Initiative of Japan
+Copyright (C) 2006, 2011, 2016, 2022 Free Software Initiative of Japan
 
 Author: NIIBE Yutaka  <gniibe@fsij.org>
 
@@ -20,7 +20,7 @@ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from __future__ import print_function
@@ -68,6 +68,8 @@ def find_hubs(listing, verbose, busnum=None, devnum=None, hub=None):
                                      request = usb.REQ_GET_DESCRIPTOR,
                                      value = usb.DT_HUB << 8,
                                      index = 0, buffer = 1024, timeout = 1000)
+            except:
+                pass
             finally:
                 del uh
 

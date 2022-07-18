@@ -1,5 +1,10 @@
 2022-07-18  NIIBE Yutaka  <gniibe@fsij.org>
 
+	* tool/hub_ctrl.py (find_hubs): Catch the exception.
+	Change the interpreter path to Python3.
+
+2022-07-18  NIIBE Yutaka  <gniibe@fsij.org>
+
 	* chopstx: Update to Chopstx 2.4.
 	* Makefile: Fix for picolibc.
 	* regnual/Makefile: Fix for picolibc.
