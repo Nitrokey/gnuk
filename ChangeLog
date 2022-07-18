@@ -1,3 +1,150 @@
+2022-07-18  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* chopstx: Update to Chopstx 2.4.
+	* Makefile: Fix for picolibc.
+	* regnual/Makefile: Fix for picolibc.
+
+2022-07-12  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* test/*: Remove.
+
+2022-07-11  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* tests/*: Fix tests for token with KDO required setup.
+
+2022-07-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/aes.c (FT0, FT1, FT2): Fix for table in ROM.
+
+2022-06-29  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/configure (kdf_do): Fix.
+
+2022-06-28  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Remove Data Object definition for internal NR_DO_PRVKEY_*.
+	* src/gnuk.h (NR_DO_PRVKEY_*): Remove.
+	* src/openpgp-do.c (gpg_pw_get_err_counter): Lookup num_prv_keys.
+	(gpg_do_delete_prvkey): Use flash_key_addr, instead of DOs.
+	* src/openpgp.c (gpg_init): Call gpg_data_scan after
+	flash_key_storage_init.
+
+2022-06-20  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/flash.c (flash_key_write): Fix for odd size data.
+
+2022-06-17  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/flash.c (flash_key_write): Put tag, nonce and DEKs in key
+	store, instead of Data Object.  Fix for odd size.
+	* misc/t-gcm-siv.c: New.
+	* src/openpgp-do.c (gpg_get_algo_key_size): Exact size, no round
+	up to order of two.
+	(gpg_do_load_prvkey): Fix for key store.
+	(gpg_do_write_prvkey): Likewise.
+	(gpg_do_chks_prvkey): Likewise.
+	(gpg_do_pubkey_addr): Likewise.
+	(gpg_do_delete_prvkey: Likewise.
+	(get_do_ptr_nr_for_kk): Remove.
+
+2022-06-17  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/gnuk.h (gcm_siv_encrypt, gcm_siv_decrypt): New.
+	* src/gcm-siv.c (gcm_siv_encrypt, gcm_siv_decrypt): New.
+	* src/openpgp-do.c (compute_key_data_checksum): Remove.
+	(crypt0, derive_keys, encrypt, decrypt): Remove.
+	(gpg_do_load_prvkey): Use gcm_siv_decrypt.  Use pubkey as
+	additional data.
+	(gpg_do_write_prvkey): Use gcm_siv_encrypt.  Likewise.
+
+2022-06-17  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Change key store layout in Flash memory.  Only a single key in a
+	page at a fixed area.
+	* src/gnuk.h (gpg_get_algo_key_size): New.
+	* src/openpgp-do.c (gpg_get_algo_key_size): New.
+	(gpg_do_pubkey_addr): New.
+	(gpg_do_delete_prvkey): Change the API.
+	* src/flash.c (flash_key_addr): New.
+	(flash_key_release, flash_key_write): Change the API.
+	* src/openpgp.c (cmd_pso): Use gpg_do_pubkey_addr.
+
+2022-06-09  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/openpgp-do.c (compute_key_data_checksum): Use POLYVAL.
+	(encrypt, decrypt): Use AEAD by AES-GCM-SIV.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/gcm-siv.c: New.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/Makefile: Remove pinpad support.
+	* src/configure (pinpad, hid_card_change): Remove.
+	* src/config.h.in (@PINPAD_DEFINE@, @PINPAD_MORE_DEFINE@)
+	(@HID_CARD_CHANGE_DEFINE@): Remove.
+	* src/gnuk.h (EV_PINPAD_INPUT_DONE): Remove.
+	* src/main.c [PINPAD_CIR_SUPPORT, PINPAD_DND_SUPPORT] (main):
+	Remove pinpad support.
+	* src/openpgp.c [PINPAD_SUPPORT] (get_pinpad_input): Remove.
+	(openpgp_card_thread): Remove pinpad support.
+	* src/pin-cir.c: Remove.
+	* src/pin-dnd.c: Remove.
+	* src/usb-msc.c, src/usb-msc.h: Remove.
+	* src/usb-ccid.c (usb_tx_done): Remove pinpad support.
+	* src/usb_conf.h: Remove pinpad support.
+	* src/usb_ctrl.c: Remove pinpad support.
+	* src/usb_desc.c: Remove pinpad support.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* polarssl/*: Remove.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* src/aes.c (aes_encrypt): Change the API.
+	(aes_crypt_ctr): New.
+	* src/openpgp-do.c: Use internal AES, instead of PolarSSL.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Add an AES 256 implementation.
+	* misc/gen_rijndael_t_table.py: New.
+	* src/Makefile (CSRC): Add aes.c.  No add of CRYPTSRC.
+	(INCDIR): No add of CRYPTINCDIR.
+	(CRYPTDIR, CRYPTSRCDIR, CRYPTINCDIR, CRYPTSRC): Remove.
+	* src/aes-t-table.c.in: New.
+	* src/aes.h, src/aes.c: New.
+
+2022-06-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	* tests/openpgp_card.py: Fix card type detection.
+
+2022-06-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Use CTR mode for private key encryption/decryption.
+	* src/openpgp-do.c (crypt): New.
+
+2022-06-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix tests for selecting key algo for a token.
+	* tests/pubkey_crypto.py (get_PK_Crypto): New.
+	(get_key, get_test_vector): New.
+	* tests/card_test_keygen.py: Update.
+	* tests/card_test_personalize_admin_less_1.py: Update.
+	* tests/card_test_personalize_admin_less_2.py: Update.
+	* tests/card_test_personalize_card_2.py: Update.
+	* tests/card_test_public_key_operations.py: Update.
+	* tests/card_test_public_key_operations_alt.py: Update.
+	* tests/card_test_public_key_operations_kg.py: Update.
+
+2022-05-20  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix tests for RSA removal.
+	* tests/pubkey_crypto.py: Load Curve25519.
+	* tests/card_const.py (default_key): Default is Curve25519.
+
 2022-04-25  NIIBE Yutaka  <gniibe@fsij.org>
 
 	Remove RSA support.
