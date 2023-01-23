@@ -102,9 +102,11 @@ class CardReader(object):
             if endpoint_type(ep.bmAttributes) == ENDPOINT_TYPE_BULK and \
                endpoint_direction(ep.bEndpointAddress) == ENDPOINT_OUT:
                self.__bulkout = ep.bEndpointAddress
+               self.__bulkout_maxPacketSize = ep.wMaxPacketSize
             if endpoint_type(ep.bmAttributes) == ENDPOINT_TYPE_BULK and \
                endpoint_direction(ep.bEndpointAddress) == ENDPOINT_IN:
                self.__bulkin = ep.bEndpointAddress
+               self.__bulkin_maxPacketSize = ep.wMaxPacketSize
 
         assert len(intf.extra_descriptors) == 54
         assert intf.extra_descriptors[1] == 33
@@ -149,6 +151,13 @@ class CardReader(object):
 
     def ccid_get_result(self):
         msg = self.__dev.read(self.__bulkin, 1024, self.__timeout)
+        if (len(msg) % self.__bulkin_maxPacketSize) == 0:
+            # End of transaction after a message the multiple of the length of the maximum packet size
+            # is signaled by a zlp
+            zlp = self.__dev.read(self.__bulkin, 0, self.__timeout)            
+            if len(zlp) != 0:
+                print(msg)
+                raise ValueError("ccid_get_result")
         if len(msg) < 10:
             print(msg)
             raise ValueError("ccid_get_result")
