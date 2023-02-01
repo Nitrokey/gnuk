@@ -56,6 +56,9 @@ def test_name_lang_sex(card):
     expected = b'\x5b' + pack('B', len(name)) + name \
                +  b'\x5f\x2d' + pack('B', len(lang)) + lang \
                + b'\x5f\x35' + pack('B', len(sex)) + sex
+    expected_alt = b'\x5b' + pack('B', len(name)) + name \
+               +  b'\x5f\x2d' + pack('B', len(lang)) + lang \
+               + b'\x5f\x35' + pack('B', len(sex)) + sex_alt
     expected_de = b'\x5b' + pack('B', len(name)) + name \
                +  b'\x5f\x2d' + pack('B', len(lang_de)) + lang_de \
                + b'\x5f\x35' + pack('B', len(sex)) + sex
@@ -63,8 +66,11 @@ def test_name_lang_sex(card):
                +  b'\x5f\x2d' + pack('B', len(lang_de)) + lang_de \
                + b'\x5f\x35' + pack('B', len(sex_alt)) + sex_alt
     name_lang_sex = get_data_object(card, 0x65)
-    assert name_lang_sex == b'' or name_lang_sex == expected \
-        or name_lang_sex == expected_de or name_lang_sex == expected_de_alt
+    assert name_lang_sex == b'' \
+        or name_lang_sex == expected \
+        or name_lang_sex == expected_alt \
+        or name_lang_sex == expected_de \
+        or name_lang_sex == expected_de_alt
 
 def test_app_data(card):
     if card.is_yubikey:
