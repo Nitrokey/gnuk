@@ -41,6 +41,12 @@ def alt_key(card, is_for_encr):
             return KEY_ATTRIBUTES_ECDH_SECP256K1
         else:
             return KEY_ATTRIBUTES_ECDSA_SECP256K1
+    elif card.is_nitrokey3:
+        if is_for_encr:
+            return KEY_ATTRIBUTES_ECDH_NISTP256R1
+        else:
+            return KEY_ATTRIBUTES_ECDSA_NISTP256R1
+        
     else:
         if is_for_encr:
             return KEY_ATTRIBUTES_ECDH_BRAINPOOLP256R1

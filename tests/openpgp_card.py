@@ -66,6 +66,7 @@ class OpenPGP_Card(object):
         self.__kdf_salt_admin = None
         string2 = reader.get_string(2)
         self.is_gnuk = (string2 == "Gnuk Token")
+        self.is_nitrokey3 = (string2 == "Nitrokey 3")
         self.is_yubikey = (string2[0:7] == "YubiKey") or (string2[0:7] == "Yubikey")
 
         try:
