@@ -214,7 +214,10 @@ def test_key_attributes_1(card):
         a = None
     else:
         a = get_data_object(card, 0xc1)
-        assert a == None or a == b'\x01\x08\x00\x00\x20\x00' or a == b'\x16\x2b\x06\x01\x04\x01\xda\x47\x0f\x01'
+        assert a == None \
+            or a == KEY_ATTRIBUTES_RSA2K \
+            or a == KEY_ATTRIBUTES_RSA2K_CRT \
+            or a == b'\x16\x2b\x06\x01\x04\x01\xda\x47\x0f\x01'
     if not a:
         a = KEY_ATTRIBUTES_RSA2K
     card.save_algo_attribute(1, a)
@@ -226,7 +229,10 @@ def test_key_attributes_2(card):
         a = None
     else:
         a = get_data_object(card, 0xc2)
-        assert a == None or a == b'\x01\x08\x00\x00\x20\x00' or a == b'\x12\x2b\x06\x01\x04\x01\x97\x55\x01\x05\x01'
+        assert a == None \
+            or a == KEY_ATTRIBUTES_RSA2K \
+            or a == KEY_ATTRIBUTES_RSA2K_CRT \
+            or a == b'\x12\x2b\x06\x01\x04\x01\x97\x55\x01\x05\x01'
     if not a:
         a = KEY_ATTRIBUTES_RSA2K
     card.save_algo_attribute(2, a)
@@ -238,7 +244,10 @@ def test_key_attributes_3(card):
         a = None
     else:
         a = get_data_object(card, 0xc3)
-        assert a == None or a == b'\x01\x08\x00\x00\x20\x00' or a == b'\x16\x2b\x06\x01\x04\x01\xda\x47\x0f\x01'
+        assert a == None \
+            or a == KEY_ATTRIBUTES_RSA2K \
+            or a == KEY_ATTRIBUTES_RSA2K_CRT \
+            or a == b'\x16\x2b\x06\x01\x04\x01\xda\x47\x0f\x01'
     if not a:
         a = KEY_ATTRIBUTES_RSA2K
     card.save_algo_attribute(3, a)
